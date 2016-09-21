@@ -25,13 +25,32 @@ def countdown(num_array, target, algorithm = "")
         if countdown(new_array, target, new_algorithm) != false
           return countdown(new_array, target, new_algorithm)
         else
+          break
+        end
+      end
+    end
+
+    # repeat addition step with multiplication
+    num_array.each_with_index do |num1, index|
+      num_array[(index + 1)..-1].each do |num2|
+        new_array = num_array.collect {|x| x }
+        new_array << (num1 * num2)
+        new_array.delete(num1)
+        new_array.delete(num2)
+
+        new_algorithm = algorithm + "#{num1} * #{num2} = #{num1 * num2}, "
+
+        if countdown(new_array, target, new_algorithm) != false
+          return countdown(new_array, target, new_algorithm)
+        else
           return false
         end
       end
     end
+
   else
     return false
   end
 end
 
-countdown([3, 5, 10], 80)
+puts countdown([3, 5, 10, 4], 320)
