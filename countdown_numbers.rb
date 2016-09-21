@@ -21,7 +21,7 @@ def countdown(num_array, target, algorithm = "")
         # add operation to algorithm string
         new_algorithm = algorithm + "#{num1} + #{num2} = #{num1 + num2}, "
 
-        puts num_array[(index + 1)..-1], '|', num_array, new_algorithm
+        # puts num_array[(index + 1)..-1], '|', num_array, new_algorithm
 
         # if calling method on the new array does not equal false return the value of that method call (algorithm string)
         if countdown(new_array, target, new_algorithm) != false
@@ -42,7 +42,7 @@ def countdown(num_array, target, algorithm = "")
 
         new_algorithm = algorithm + "#{num1} * #{num2} = #{num1 * num2}, "
 
-        puts num_array[(index + 1)..-1], '|', num_array, new_algorithm
+        # puts num_array[(index + 1)..-1], '|', num_array, new_algorithm
 
         if countdown(new_array, target, new_algorithm) != false
           return countdown(new_array, target, new_algorithm)
@@ -51,8 +51,59 @@ def countdown(num_array, target, algorithm = "")
         end
       end
     end
+
+    # subtraction step
+    num_array.each do |num1|
+      new_array = num_array.collect {|x| x}
+      new_array.delete(num1)
+      new_array.each do |num2|
+        new_new_array = new_array.collect {|x| x}
+        if num1 - num2 > 0
+          new_new_array << (num1 - num2)
+          new_new_array.delete(num2)
+
+          new_algorithm = algorithm + "#{num1} - #{num2} = #{num1 - num2}, "
+
+          if countdown(new_new_array, target, new_algorithm) != false
+            return countdown(new_new_array, target, new_algorithm)
+          else
+            next
+          end
+        else
+          next
+        end
+
+      end
+    end
+
+    # division step
+
+    num_array.each do |num1|
+      new_array = num_array.collect {|x| x}
+      new_array.delete(num1)
+      new_array.each do |num2|
+        new_new_array = new_array.collect {|x| x}
+        puts new_new_array
+        if num1 % num2 == 0 && num1 / num2 != 0
+          new_new_array << (num1 / num2)
+          new_new_array.delete(num2)
+
+          new_algorithm = algorithm + "#{num1} / #{num2} = #{num1 / num2}, "
+
+          if countdown(new_new_array, target, new_algorithm) != false
+            return countdown(new_new_array, target, new_algorithm)
+          else
+            next
+          end
+        else
+          next
+        end
+      end
+
+    end
+
     false
   end
 end
 
-puts countdown([3, 5, 10, 4, 100, 50], 232)
+puts countdown([3, 5, 10, 4, 100, 50], 315)
