@@ -5,7 +5,9 @@ def countdown(num_array, target, algorithm = "")
     #If it does return the algorithm string
     return algorithm
 
-  elsif num_array.length > 1
+  # elsif num_array.length == 1
+  #   return false
+  else
     #create new array, 1 step from current
 
     # add two numbers, push product to array and delete used numbers
@@ -19,18 +21,18 @@ def countdown(num_array, target, algorithm = "")
         # add operation to algorithm string
         new_algorithm = algorithm + "#{num1} + #{num2} = #{num1 + num2}, "
 
-        # puts new_array
+        puts num_array[(index + 1)..-1], '|', num_array, new_algorithm
 
         # if calling method on the new array does not equal false return the value of that method call (algorithm string)
         if countdown(new_array, target, new_algorithm) != false
           return countdown(new_array, target, new_algorithm)
         else
-          break
+          next
         end
       end
     end
 
-    # repeat addition step with multiplication
+    #repeat addition step with multiplication
     num_array.each_with_index do |num1, index|
       num_array[(index + 1)..-1].each do |num2|
         new_array = num_array.collect {|x| x }
@@ -40,17 +42,17 @@ def countdown(num_array, target, algorithm = "")
 
         new_algorithm = algorithm + "#{num1} * #{num2} = #{num1 * num2}, "
 
+        puts num_array[(index + 1)..-1], '|', num_array, new_algorithm
+
         if countdown(new_array, target, new_algorithm) != false
           return countdown(new_array, target, new_algorithm)
         else
-          return false
+          next
         end
       end
     end
-
-  else
-    return false
+    false
   end
 end
 
-puts countdown([3, 5, 10, 4], 320)
+puts countdown([3, 5, 10, 4, 100, 50], 232)
