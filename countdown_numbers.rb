@@ -1,3 +1,5 @@
+$count = 0
+
 def countdown(num_array, target, algorithm = "")
   #does current array include target?
 
@@ -13,6 +15,7 @@ def countdown(num_array, target, algorithm = "")
     # add two numbers, push product to array and delete used numbers
     num_array.each_with_index do |num1, index|
       num_array[(index + 1)..-1].each do |num2|
+        $count += 1
         new_array = num_array.collect {|x| x }
         new_array << (num1 + num2)
         new_array.delete(num1)
@@ -35,6 +38,7 @@ def countdown(num_array, target, algorithm = "")
     #repeat addition step with multiplication
     num_array.each_with_index do |num1, index|
       num_array[(index + 1)..-1].each do |num2|
+        $count += 1
         new_array = num_array.collect {|x| x }
         new_array << (num1 * num2)
         new_array.delete(num1)
@@ -57,6 +61,7 @@ def countdown(num_array, target, algorithm = "")
       new_array = num_array.collect {|x| x}
       new_array.delete(num1)
       new_array.each do |num2|
+        $count += 1
         new_new_array = new_array.collect {|x| x}
         if num1 - num2 > 0
           new_new_array << (num1 - num2)
@@ -77,13 +82,12 @@ def countdown(num_array, target, algorithm = "")
     end
 
     # division step
-
     num_array.each do |num1|
       new_array = num_array.collect {|x| x}
       new_array.delete(num1)
       new_array.each do |num2|
+        $count += 1
         new_new_array = new_array.collect {|x| x}
-        puts new_new_array
         if num1 % num2 == 0 && num1 / num2 != 0
           new_new_array << (num1 / num2)
           new_new_array.delete(num2)
@@ -106,4 +110,5 @@ def countdown(num_array, target, algorithm = "")
   end
 end
 
-puts countdown([3, 5, 10, 4, 100, 50], 315)
+puts countdown([1, 1, 2, 2, 3, 3], 101)
+puts $count
